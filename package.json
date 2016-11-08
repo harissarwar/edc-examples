@@ -1,0 +1,22 @@
+{
+  "name": "edc-node-examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harissarwar/edc-node-examples.git"
+  },
+  "author": "haris.sarwar@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/harissarwar/edc-node-examples/issues"
+  },
+  "homepage": "https://github.com/harissarwar/edc-node-examples#readme",
+  "dependencies": {
+    "swagger-node-codegen": "0.0.9"
+  }
+}

@@ -1,0 +1,2883 @@
+{
+  "swagger": "2.0",
+  "host": "api-stage.everywhere-cloud.com",
+  "basePath": "/v2",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/v2/accounts": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the list of all the Accounts visible to the currently connected user."
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Creates a new Account based on the information provided in AccountCreator parameter."
+      },
+      "parameters": []
+    },
+    "/v2/alerts": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          },
+          {
+            "name": "startDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Start date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT. The default value of 0\nmeans no start date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "endDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "End date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT. The default value of 0 means\nno end date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "severity",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": ": can be one of the following CRITICAL, WARNING, INFO"
+          },
+          {
+            "name": "source",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": ": can be an asset name or System"
+          },
+          {
+            "name": "category",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": ": eg Performance, Security, Other etc ..."
+          }
+        ],
+        "description": "Returns the list of all the Alerts published under the account of the currently connected user.\n<p>\nExample of query in CURL :<br>\ncurl --user 'clientId:client password' -k https://api-sandbox.everyware-cloud.com/v2/alerts.xml?severity=CRITICAL\" | xmllint --format - <br>"
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Stores a new Alert under the account of the currently connected user.\nIn this case, the provided alert will only be stored in the back-end\ndatabase and it will not be forwarded to the message broker."
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "uuid",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": ": unique identifier of the alert to be deleted"
+          },
+          {
+            "name": "source",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": ": source of the alert to be deleted"
+          },
+          {
+            "name": "startDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": ": date of the alert to be deleted. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT. The default value of 0 means no\nstart date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "endDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "End date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT. The default value of 0 means\nno end date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be deleted (default 50)."
+          },
+          {
+            "name": "severity",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": ": can be one of the following CRITICAL, WARNING, INFO"
+          },
+          {
+            "name": "category",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": ": eg Performance, Security, Other etc ...\nAll params are optional, if source and startDate are omitted all alerts are deleted (and other params are ignored), if not source MUST BE SET.\n<p>\nTo delete a single alert, source and startDate must be defined and endDate must not be defined."
+          }
+        ],
+        "description": "Delete one alert or a group of alerts published on the account or all the alerts if no param are passed.\n<p>\nTo delete a given alert, the best way is to use its unique identifier \"uuid\".<br>\nExample of query in CURL :<br>\ncurl --user 'clientId:client password' -X DELETE -k \"https://api-sandbox.everyware-cloud.com/v2/alerts.xml?uuid=de9959b7-b80d-4881-bffd-0d7c93523ded\""
+      },
+      "parameters": []
+    },
+    "/v2/assets": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          }
+        ],
+        "description": "Returns the list of all the Assets that published some data for the account of the currently connected user.\nFor each returned Asset, the Asset ID and timestamp of its last received message will be returned."
+      },
+      "parameters": []
+    },
+    "/v2/deviceCerts": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          }
+        ],
+        "description": "Returns the list of all the device certificate.\n\n<p>\nIf the flag AllowedCertificatesResult.limitExceeded is set, the maximum number of entries to be returned has been reached, more pkis exist and can be read by moving the offset forward in a new request\n<p>\nExample to get all device certificates:\n\n<pre>\nString apiPath = \"deviceCerts.xml\";\nWebResource apisWeb = client.resource(API_URL).path(apiPath);\n\nAllowedCertificatesResult result;\nint offset = 0;\ndo {\n// if the \"limit\" queryParam is not initialized, limit default value = 50\n// if the \"offset\" queryParam is not initialized, offset default value = 0\napisWeb = apisWeb.queryParam(\"limit\", \"\" + limit);\nif (offset > 0)\napisWeb = apisWeb.queryParam(\"offset\", \"\" + offset);\nresult = apisWeb.get(AllowedCertificatesResult.class);\noffset += limit;\n} while (result.isLimitExceeded()):\n</pre>\n\n<p>\nExample of query in CURL :<br>\ncurl --user 'username:password' -k https://api-sandbox.everyware-cloud.com/v2/deviceCerts"
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Creates a new device certificate based on the information provided in certificateCreator parameter."
+      },
+      "put": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Updates the device certificate provided in the request body."
+      },
+      "parameters": []
+    },
+    "/v2/deviceJobs": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Creates and schedule a Device Job based on the information in the DeviceJobCreator.\n<p>\n<h3>Target ClientIDs</h3>\nIn a Device job target clientIDs can be specified specifically and/or specifying tagIDs that groups them. It is possible to use any combination of both declaration, and duplicates are\nautomatically detected and removed.\n</p>\n\n<p>\n<h3>Job Type</h3>\nThe following operation are supported in a Device Job:\n<ul>\n<li>Configuration Update: updates one or more components on the target ClientIDs</li>\n<li>Software Install: installs or updates a package on the target ClientIDs that supports DEPLOY-V1 application</li>\n<li>Software Install V2: installs or updates a package on the target ClientIDs that supports DEPLOY-V2 application</li>\n<li>Software Uninstall: uninstalls a package on the target ClientIDs that supports DEPLOY-V1 application</li>\n<li>Software Uninstall V2: uninstalls a package on the target ClientIDs that supports DEPLOY-V2 application</li>\n<li>Command: executes a remote command on the target ClientIDs</li>\n</ul>\n\n<h4>Configuration Update</h4>\n<p>\nThis Job is used to change the configuration of one ore more components on all target ClientIDs. <br/>\nThe configuration file must be specified on the JobAttachment field, while anything wrote in the jobPropertiesMap field is ignored. <br/>\nPlease refer to JobAttachmentCreator documentation.\n</p>\n\n<h4>Software Install</h4>\n<p>\nThis Job is used to install or update a package on all target ClientIDs that support DEPLOY-V1 application.<br/>\nThe package to be installed via:\n<ul>\n<li>File: The package will be uploaded to EDC platform and then sent to all target device. The package file must be specified on the JobAttachment field. Please refer to JobAttachmentCreator\ndocumentation.</li>\n<li>URL: The package will be download directly by the target device using the URL given. Properties needs to be added to jobPropertiesMap field. Available properties for this type of job via URL are listed below.</li>\n\n<table class=\"table\">\n<thead>\n<tr>\n<th>Name</th>\n<th>Type</th>\n<th>Mandatory</th>\n<th>Default Value</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>deployUrl</td>\n<td>String</td>\n<td>Yes</td>\n<td></td>\n</tr>\n<tbody>\n</table>\n\n</ul>\n</p>\n\n<h4>Software Install V2</h4>\n<p>\nThis Job is used to install or update a package on all target ClientIDs that support DEPLOY-V2 application.<br/>\nProperties needs to be added to jobPropertiesMap field. Available properties for this type of job are listed below.\n\n<table class=\"table\">\n<thead>\n<tr>\n<th>Name</th>\n<th>Type</th>\n<th>Mandatory</th>\n<th>Default Value</th>\n<th>Description</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>dp.uri</td>\n<td>String</td>\n<td>Yes</td>\n<td></td>\n<td>The deployment package (or .sh script) URI where to download the file.</td>\n</tr>\n<tr>\n<td>dp.name</td>\n<td>String</td>\n<td>yes</td>\n<td></td>\n<td>The deployment package name to install. <br/>This is used on the device to search for already installed version of this package.</td>\n</tr>\n<tr>\n<td>dp.version</td>\n<td>String</td>\n<td>Yes</td>\n<td></td>\n<td>The deployment package version to install. <br/>This is used on the device to manage the updates of the packages.</td>\n</tr>\n<tr>\n<td>dp.download.protocol</td>\n<td>String</td>\n<td>No</td>\n<td>HTTP</td>\n<td>The protocol used to download the file from the URI<br/>Available protocols:<ul><li>HTTP (which includes both HTTP and HTTPS)</li></ul></td>\n</tr>\n<tr>\n<td>dp.download.block.size</td>\n<td>Integer</td>\n<td>No</td>\n<td>null</td>\n<td>The size in Byte of the blocks used to download the DP via HTTP.</td>\n</tr>\n<tr>\n<td>dp.download.block.delay</td>\n<td>Integer</td>\n<td>No</td>\n<td>0</td>\n<td>Delay in ms between block transfers.</td>\n</tr>\n<tr>\n<td>dp.download.notify.block.size</td>\n<td>Integer</td>\n<td>No</td>\n<td>null</td>\n<td>The interval of Bytes between notification messages.</td>\n</tr>\n<tr>\n<td>dp.download.timeout</td>\n<td>Integer</td>\n<td>No</td>\n<td>60000</td>\n<td>The timeout in ms to be used to download the DP via HTTP.</td>\n</tr>\n<tr>\n<td>dp.download.resume</td>\n<td>Boolean</td>\n<td>No</td>\n<td>true</td>\n<td>Resume HTTP transfer if supported by the server.</td>\n</tr>\n<tr>\n<td>dp.download.force</td>\n<td>Boolean</td>\n<td>No</td>\n<td>true</td>\n<td>Force the download of the file, even if it has been already downloaded and saved to the file system of the device.</td>\n</tr>\n<tr>\n<td>dp.download.username</td>\n<td>String</td>\n<td>No</td>\n<td>null</td>\n<td>Username for password protected http download. No authentication will be tried if username is not present.</td>\n</tr>\n<tr>\n<td>dp.download.password</td>\n<td>String</td>\n<td>No</td>\n<td>null</td>\n<td>Password for password protected http download. No authentication will be tried if password is not present.</td>\n</tr>\n<tr>\n<td>dp.download.hash</td>\n<td>String</td>\n<td>No</td>\n<td>null</td>\n<td>The algorithm and value of the hash of the file used to verify the integrity of the download.<br/>The format is of this property is: <i>{algorithm}</i>:<i>{hashValue}</i><br/>Available algorithm:<ul><li>MD5</li></ul>Examples:<ul><li>MD5:46cbc7f212b94187cb6480fe9429a89c</li></ul></td>\n</tr>\n<tr>\n<td>dp.install</td>\n<td>Boolean</td>\n<td>No</td>\n<td>true</td>\n<td>Whether the package should be immediately installed after being downloaded.</td>\n</tr>\n<tr>\n<td>dp.install.system.update</td>\n<td>Boolean</td>\n<td>No</td>\n<td>false</td>\n<td>Mark this install as a system install. <br/>The device needs to know if this is a system update rather than a bundle/package update.</td>\n</tr>\n<tr>\n<td>dp.install.verifier.uri</td>\n<td>String</td>\n<td>No</td>\n<td>null</td>\n<td>The verifier script URI to run after the installation of the system update. <br/>If not given the device will consider the operation successfully completed if is able to run the system update.</td>\n</tr>\n<tr>\n<td>dp.reboot</td>\n<td>Boolean</td>\n<td>No</td>\n<td>false</td>\n<td>Whether the system should be rebooted as part of the package installation process.</td>\n</tr>\n<tr>\n<td>dp.reboot.delay</td>\n<td>Integer</td>\n<td>No</td>\n<td>0</td>\n<td>Delay in ms after which the device will be rebooted. Only meaningful if dp.reboot==true.</td>\n</tr>\n<tbody>\n</table>\n</p>\n\n<h4>Software Uninstall</h4>\n<p>\nThis Job is used to uninstall a package on all target Client IDs.<br/>\nThe package name must match the package name installed on the target client IDs that support DEPLOY-V1 application.<br/>\nThe package name must be declared in the JobProperties field. Anything set in JobAttachment field will be ignored.<br/>\nProperties needs to be added to jobPropertiesMap field. Available properties for this type of job are listed below.\n\n<table class=\"table\">\n<thead>\n<tr>\n<th>Name</th>\n<th>Type</th>\n<th>Mandatory</th>\n<th>Default Value</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>packageName</td>\n<td>String</td>\n<td>Yes</td>\n<td></td>\n</tr>\n<tbody>\n</table>\n</p>\n\n<h4>Software Uninstall V2</h4>\n<p>\nThis Job is used to uninstall a package on all target ClientIDs that support DEPLOY-V2 application.<br/>\nProperties needs to be added to jobPropertiesMap field. Available properties for this type of job are listed below.\n\n<table class=\"table\">\n<thead>\n<tr>\n<th>Name</th>\n<th>Type</th>\n<th>Mandatory</th>\n<th>Default Value</th>\n<th>Description</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>dp.name</td>\n<td>String</td>\n<td>Yes</td>\n<td></td>\n<td>The deployment package symbolic name to uninstall. <br/>This is used on the device to select which package will be uninstalled.<br/></td>\n</tr>\n<tr>\n<td>dp.reboot</td>\n<td>Boolean</td>\n<td>No</td>\n<td>false</td>\n<td>Whether the system should be rebooted as part of the package uninstall process.</td>\n</tr>\n<tr>\n<td>dp.reboot.delay</td>\n<td>Integer</td>\n<td>No</td>\n<td>0</td>\n<td>Delay in ms after which the device will be rebooted. Only meaningful if dp.reboot==true.</td>\n</tr>\n</tbody>\n</table>\n\n<h4>Command</h4>\n<p>\nThis Job is used to execute a remote command on the target device.<br/>\nThe command must be a recognized command by the OS installed on your device. The working directory of the execution will be /tmp/ of the device.<br/>\nIt is possible to attach a file to this job that will be uploaded to the target device into /tmp/ directory. The file attached must be in a valid .zip compressed format, and it will be\nautomatically decompressed by the device on receiving.<br/>\n</p>\n\n<p>\nThe command must be declared in the JobProperties field. The optional file attached must be specified on the JobAttachment field. Please refer to JobAttachmentCreator documentation. <br/>\nIs not possible to concatenate more command using | (pipe) or > (close angular parenthesis).<br/>\nFor example the command \"cat text.txt | grep test\" does not work as concatenation of both commands, but all string except the first will be passed as parameters of the first string, that\nrepresent the command, with the result of executing cat of four files.<br/>\nTo achieve concatenation of parameters or more complicated executions please create a script and add it as attachment of the job and then use the command to run the script.\n</p>\n\n<p>\nProperties needs to be added to jobPropertiesMap field. Available properties for this type of job are listed below.\n\n<table class=\"table\">\n<thead>\n<tr>\n<th>Name</th>\n<th>Type</th>\n<th>Mandatory</th>\n<th>Default Value</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>command</td>\n<td>String</td>\n<td>Yes</td>\n<td></td>\n</tr>\n<tbody>\n</table>\n</p>\n</p>\n<p>\n<h3>Job Scheduling</h3>\nThere are two way to define the scheduling for a device job:\n<ul>\n<li>Simple scheduling: defined by a start date and a fixed retry interval (and optional end date).</li>\n<li>Cron scheduling: defined by a Cron Expression and limited by a start date (and optional end date).</li>\n</ul>\n</p>\n\n<h4>Simple scheduling</h4>\n<p>\nThis scheduling needs:\n<ul>\n<li>Start Date: the time of the first execution of this device job. This field is mandatory.</li>\n<li>End Date: the time after that the job must not be triggered anymore. This field is optional, and if not set the device job will stop when it reaches the <i>max number of retries</i></li>\n<li>Max Number Of Retries: the number of times that a job can be re-triggered. If end date is set and is passed the job will not be triggered. This field is mandatory</li>\n<li>Retry Every: the interval in second between each retry. This field is mandatory. If set to 0 the job will be triggered only once and one time.</li>\n</ul>\n</p>\n\n<h4>Cron scheduling</h4>\n<p>\nThis scheduling needs:\n<ul>\n<li>Start Date: the time after that executions of this device job will be triggered. This field is mandatory.</li>\n<li>End Date: the time after that the job must not be triggered anymore. This field is optional.</li>\n<li>Max Number Of Retries: the number of times that a job can be re-triggered. If end date is set and is passed the job will not be triggered. This field is mandatory.</li>\n<li>Cron Expression: this field represent the scheduling of this job following the Cron Expression syntax. Please refer to the <a target=\"_blank\"\nhref=\"http://en.wikipedia.org/wiki/Cron#CRON_expression\">Cron Expression Documentation</a>.</li>\n</ul>\n</p>\n</p>"
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "displayName",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "If specified result are filtered by display name. Display name is not unique so more than one result can be obtained."
+          },
+          {
+            "name": "useLike",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "If false the method matches the whole display name. If true the method matches all display names that starts with the specified display name."
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "description": "Returns the list of all Device Job of the current account with pagination."
+      },
+      "parameters": []
+    },
+    "/v2/devices": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          }
+        ],
+        "description": "Returns the list of all the Devices that connected under the account of the currently connected user.\nFor each returned Device, its latest Device profile will be returned.\n<p>\nIf the flag DevicesResult.limitExceeded is set, the maximum number of entries to be returned has been reached, more devices exist and can be read by moving the offset forward in a new request\n<p>\nExample to get all devices:\n\n<pre>\nString apiPath = \"devices.xml\";\nWebResource apisWeb = client.resource(API_URL).path(apiPath);\n\nDevicesResult result;\nint offset = 0;\ndo {\n// if the \"limit\" queryParam is not initialized, limit default value = 50\n// if the \"offset\" queryParam is not initialized, offset default value = 0\napisWeb = apisWeb.queryParam(\"limit\", \"\" + limit);\nif (offset > 0)\napisWeb = apisWeb.queryParam(\"offset\", \"\" + offset);\nresult = apisWeb.get(DevicesResult.class);\noffset += limit;\n} while (result.isLimitExceeded()):\n</pre>\n\n<p>\nExample of query in CURL :<br>\ncurl --user 'username:password' -k https://api-sandbox.everyware-cloud.com/v2/devices.xml | xmllint --format -"
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Creates a new Device based on the information provided in DeviceCreator parameter."
+      },
+      "parameters": []
+    },
+    "/v2/healthMonitors": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "startDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Start date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT. The default value of 0\nmeans no start date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "endDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "End date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT. The default value of 0 means\nno end date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "description": "Gets the health check reports ordered by CheckUpDate descending."
+      },
+      "parameters": []
+    },
+    "/v2/messages": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          },
+          {
+            "name": "startDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Start date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT.\nIf not specified it means no start date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "endDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "End date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT.\nIf not specified it means current time. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "fetch",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Specifies the amount of information requested. Allowed values are: meta, metrics, all. \"meta\" returns only the topic and received on information; \"metrics\" returns \"meta\" plus all\nthe metrics included in the message; \"all\" returns the whole message including its binary payload."
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "specify the timestamp sort order for messages : \"asc\" return messages in ascending order (oldest first), \"desc\" or not set, messages are returned newest first"
+          }
+        ],
+        "description": "Returns the list of all the Messages published under the account of the currently connected user. The startDate and endDate query parameters determine the time range for the messages returned;\nthe timestamp of the returned messages will be in the interval between startDate and endDate. For each returned message, the topic string and timestamp of its last received message will be\nreturned.\n<p>\nIf the flag MessagesResult.limitExceeded is set, the maximum number of entries to be returned has been reached, more data exist and can be read by moving the offset forward in a new request.\n<p>\nIf the parameter \"sort\" is set to \"asc\", messages are returned oldest first.\n\n<pre>\nExample to get all messages:\n// First get the total count of messages\nString apiPath = \"messages/count.xml\";\nWebResource apisWeb = client.resource(API_URL).path(apiPath);\nCountResult countResult = apisWeb.get(CountResult.class);\n\n// Then paginate to get all messages\nlong MSG_COUNT = countResult.getCount();\napiPath = \"messages.xml\";\napisWeb = client.resource(API_URL).path(apiPath);\n\nfor (int offset = 0; offset < MSG_COUNT; offset += limit) {\n// set limit and offset as queryParam\n// if the \"limit\" queryParam is not initialized, limit default value = 50\n// if the \"offset\" queryParam is not initialized, offset default value = 0\napisWeb = apisWeb.queryParam(\"limit\", \"\" + limit);\nif (offset > 0)\napisWeb = apisWeb.queryParam(\"offset\", \"\" + offset);\n\nMessagesResult result = apisWeb.get(MessagesResult.class);\n}\n\n// To get all messages of a given topic\napiPath = \"messages/searchByTopic.xml\";\napisWeb = client.resource(API_URL).path(apiPath);\napisWeb = apisWeb.queryParam(\"topic\", topic);\n\nMessagesResult result;\nint offset = 0;\ndo {\napisWeb = apisWeb.queryParam(\"limit\", \"\" + limit);\nif (offset > 0)\napisWeb = apisWeb.queryParam(\"offset\", \"\" + offset);\nresult = apisWeb.get(MessagesResult.class);\noffset += limit;\n} while (result.isLimitExceeded()):\n</pre>\n\n<p>\nExample of query in CURL :<br>\ncurl --user 'clientId:client password' -k https://api-sandbox.everyware-cloud.com/v2/messages.xml?startDate=2013-02-19T14:11:00&endDate=2013-02-19T14:12:00\" |\nxmllint --format - <br>"
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "topic",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "see examples above."
+          },
+          {
+            "name": "startYear",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The parameter is expressed as an int."
+          },
+          {
+            "name": "startWeek",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "number of the start week in startYear to be deleted. The parameter is expressed as an int."
+          },
+          {
+            "name": "endYear",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The parameter is expressed as an int."
+          },
+          {
+            "name": "endWeek",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "number of the end week in endYear to be deleted. The parameter is expressed as an int."
+          },
+          {
+            "name": "purge",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "if set to true, TopicsByAccount, TopicsByAssets and AssetsByAccount will be deleted."
+          }
+        ],
+        "description": "Delete all messages published on the account, eventually in a given time range. The time range is defined by year and week number. The first day of week is SUNDAY.<br>\n<br>\nIf topic is set, only messages belonging to this topic and sub-topics will be erased<br>\n<br>\n<b>If purge flag is set to true</b>, time range is ignored and all messages are deleted.<br>\n<br>\nThe time range is from startYear+startWeek (included) to endYear+endWeek (included).<br>\nIf startWeek is omitted (set to -1), all messages older than endYear+endWeek (included) will be deleted.<br>\nIf startYear+startWeek is set then endYear+endWeek is mandatory.<br>\nIf startYear+startWeek and endYear+endWeek are omitted (set to -1), all messages belonging to this account will be deleted.<br>\n<br>\nIf purge flag is true, all messages will be deleted as well as TopicsByAccount, TopicsByAssets and AssetsByAccount. Purge should not be true if a date is set.\n<p>\nExamples of topics:<br>\n* edcguest/Device_Id_01/car/route/two : delete all messages for this topic (only asset Device_Id_01 is concerned)<br>\n* edcguest/Device_Id_01/tram/# : delete all messages for asset Device_Id_01 under tram topic (including all subtopics)<br>\n* edcguest/+/car/route/one : delete all messages for all assets under car/route/one topic and delete topic car/route/one<br>\n* edcguest/+/car/# : delete all messages for all assets under car and all subtopics and delete topic car and all subtopics<br>\n* edcguest/Device_Id_01/# : delete all messages for asset Device_Id_01 and delete asset Device_Id_01<br>\n* edcguest/+/# : Delete all messages published on the account and reset account to the initial state without assets and topics (same function as messages/purge.xml).<br>\n<br>\nRemember to use URL-encoding for the following symbols:\n<li>/ = %2F</li>\n<li>+ = %2B</li>\n<li># = %23</li>\n<p>\nExample of query in CURL :<br>\ncurl --user 'clientId:client password' -X DELETE -k https://api-sandbox.everyware-cloud.com/v2/messages.xml?startYear=2012&startWeek=48&endYear=2013&endWeek=9\" <br>\n(delete all messages from 11/26/2012 to 3/3/2013)<br>"
+      },
+      "parameters": []
+    },
+    "/v2/provisionRequests": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Creates a new ProvisionRequest based on the information provided in the ProvisionRequestCreator parameter."
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "clientIDs",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "statuses",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "startDate",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "description": "Returns the list of all the ProvisionRequest associated with the currently connected user with specified offset and limit query parameters.\n\nIs it possible to filter result for:\n\n<ul>\n<li>Activity period: specify startDate and endDate to define the range to match</li>\n<li>Client IDs: specify the list of ClientIDs to match </li>\n<li>Provision Request Statuses: specify the list of statuses to match</li>\n</ul>\n\nThese three ways are mutually exclusive and are listed in order of priority.\nPagination is available for each of the three filtering type."
+      },
+      "parameters": []
+    },
+    "/v2/roles": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the list of all the Roles associated to the account of the currently connected user."
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Creates a new Role based on the information provided in RoleCreator parameter."
+      },
+      "parameters": []
+    },
+    "/v2/rules": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the list of all the Rules created under the account of the currently connected user."
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Creates a new Rule based on the information provided in RuleCreator parameter."
+      },
+      "parameters": []
+    },
+    "/v2/tags": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Creates a new Tag based on the information provided in TagCreator parameter."
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the list of all the tag associated to the account of the currently connected user."
+      },
+      "parameters": []
+    },
+    "/v2/topics": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          },
+          {
+            "name": "prefix",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Optional query parameter specifying a prefix for all the Topics returned. Only the Topics which start with the specified prefix will be returned."
+          }
+        ],
+        "description": "Returns the list of all the Topics that received some data for the account of the currently connected user.\nFor each returned Topic, the topic string and timestamp of its last received message will be returned."
+      },
+      "parameters": []
+    },
+    "/v2/users": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the list of all the users associated to the account of the currently connected user."
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Creates a new User based on the information provided in UserCreator parameter."
+      },
+      "parameters": []
+    },
+    "/v2/version": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the version information of the REST APIs implementation."
+      },
+      "parameters": []
+    },
+    "/v2/accounts/{accountId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the Account specified by the \"id\" path parameter."
+      },
+      "put": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Updates the Account specified by the \"id\" path parameter\nbased on the information provided in the Account parameter."
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Deletes the Account specified by the \"id\" path parameter."
+      },
+      "parameters": [
+        {
+          "name": "accountId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The id of the Account requested."
+        }
+      ]
+    },
+    "/v2/deviceCerts/blocked": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          }
+        ],
+        "description": "Returns the list of all the blocked device certificates.\n\n<p>\nIf the flag BlockedCertificatesResult.limitExceeded is set, the maximum number of entries to be returned has been reached, more pkis exist and can be read by moving the offset forward in a new request\n<p>\nExample to get all blocked device certificates:\n\n<pre>\nString apiPath = \"deviceCerts.xml\";\nWebResource apisWeb = client.resource(API_URL).path(apiPath);\n\nBlockedCertificatesResult result;\nint offset = 0;\ndo {\n// if the \"limit\" queryParam is not initialized, limit default value = 50\n// if the \"offset\" queryParam is not initialized, offset default value = 0\napisWeb = apisWeb.queryParam(\"limit\", \"\" + limit);\nif (offset > 0)\napisWeb = apisWeb.queryParam(\"offset\", \"\" + offset);\nresult = apisWeb.get(BlockedCertificatesResult.class);\noffset += limit;\n} while (result.isLimitExceeded()):\n</pre>\n\n<p>\nExample of query in CURL :<br>\ncurl --user 'username:password' -k https://api-sandbox.everyware-cloud.com/v2/deviceCerts"
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Creates a new blocked device certificate based on the information provided in BlockedCertificateCreator parameter."
+      },
+      "put": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Updates the blocked device certificate provided in the request body."
+      },
+      "parameters": []
+    },
+    "/v2/deviceCerts/revoked": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          }
+        ],
+        "description": "Returns the list of all the revoked device certificates."
+      },
+      "parameters": []
+    },
+    "/v2/deviceCerts/{certificateId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the device certificate identified by the specified certificateId.\n\n<p>\nExample of query in CURL :<br>\ncurl --user 'username:password' -k https://api-sandbox.everyware-cloud.com/v2/deviceCerts/{certificateId}.xml | xmllint --format -"
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Deletes the device certificate specified by the \"certificateId\" path parameter."
+      },
+      "parameters": [
+        {
+          "name": "certificateId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The id of the device certificate requested."
+        }
+      ]
+    },
+    "/v2/deviceJobs/{deviceJobId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Return the device job specified in the path parameter"
+      },
+      "put": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Updates the max number of retries for the specified device job. <br/>\n<br/>\nThe number set must greater of the current retries."
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Deletes the device job specified in the path parameter and related data of executions and target clientIDs."
+      },
+      "parameters": [
+        {
+          "name": "deviceJobId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ]
+    },
+    "/v2/devices/connectionSummary": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "tag",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Optional, the name of the Tag that will be used to select the devices whose aggregated status is requested"
+          }
+        ],
+        "description": "Returns an aggregated summary of the connection status of a group of devices at a point in time.\nIt returns the number of devices currently connected, the number of devices which disconnect cleanly,\nthe number of devices which disconnected abruptly, and the number of devices which have been disabled."
+      },
+      "parameters": []
+    },
+    "/v2/devices/search": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "clientId",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "One or more clientId for the devices to be returned."
+          },
+          {
+            "name": "serialNumber",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "One or more serial number for the devices to be returned."
+          },
+          {
+            "name": "displayName",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "One or more display name for the devices to be returned."
+          },
+          {
+            "name": "imei",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "One or more IMEI for the devices to be returned."
+          },
+          {
+            "name": "imsi",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "One or more IMSI for the devices to be returned."
+          },
+          {
+            "name": "iccid",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "modelId",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The id of the model of the devices to be returned."
+          },
+          {
+            "name": "connectionIp",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The connectionIp of the devices to be returned."
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The device status (Enabled/Disabled) of the devices to be returned."
+          },
+          {
+            "name": "connectionStatus",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The device connection status of the devices to be returned."
+          },
+          {
+            "name": "esfVersion",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The version of ESF for the devices to be returned."
+          },
+          {
+            "name": "applicationIdentifier",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The application identifiers of the devices to be returned."
+          },
+          {
+            "name": "customAttribute1",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The value of customAttribute1 for the devices to be returned."
+          },
+          {
+            "name": "customAttribute2",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The value of customAttribute2 for the devices to be returned."
+          },
+          {
+            "name": "tag",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The name of the Tag applied to the devices to be returned."
+          },
+          {
+            "name": "sortField",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Optional sorting of the returned devices. Allowed values are: \"clientId\", \"displayName\", \"lastEventOn\"."
+          },
+          {
+            "name": "signedCertificateId",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The certificate id installed on the devices to be returned."
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          },
+          {
+            "name": "fetch",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Specifies the amount of information requested. Allowed values are \"BASIC\" or \"FULL\". With \"BASIC\", the core attributes of the device and the version information of its profile are\nreturned. With \"FULL\", all the additional extended attributes are loaded and returned."
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "description": "Searches the device registry for devices based on the specified criteria.\nQuery parameters are used to defined the filtering predicate, the sorting and the pagination.\nThe supplied query parameters are combined into a logical AND, so all specified conditions\nneed to be satisfied for the device to be selected and returned.\nQuery parameters which allow for multiple values are combined into an IN predicate effectively\ncombining them into a logical OR of the values supplied.\n<p>\nThe \"fetch\" query parameter can be used to control the amount of information to be loaded and returned for each device. Allowed values are \"BASIC\" or \"FULL\". With \"BASIC\", the core attributes\nof the device and the version information of its profile are returned. With \"FULL\", all the additional device extended properties are loaded and returned.\n<p>\nThe returned devices can be sorted. Allowed values for the sortField query parameter are: \"clientId\", \"displayName\", \"lastEventOn\". Sorting can be specified ascending or descending using the\n\"sort\" query parameter with values: \"asc\" or \"desc\". If no sortField is specified, the returned devices will not follow any specific order.\n<p>\nIf the flag DevicesResult.limitExceeded is set, the maximum number of entries to be returned has been reached. More data exist and can be read by moving the offset forward in a new request"
+      },
+      "parameters": []
+    },
+    "/v2/devices/sendRequest": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "topic",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Target device and application. It is expressed with a structure like:\n\n<pre>\n$EDC / account_name / client_id / app_id / verb / resource - id\n</pre>"
+          },
+          {
+            "name": "timeout",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "description": "Sends a request message to a device and waits for a response synchronously.\nThis call is generally used to perform remote management of resources attached to the device such sensors and registries.\nThe target device is identified by the supplied topic. The topic is structured like the following:<br>\n\n<pre>\n$EDC / account_name / client_id / app_id / verb / resource - id\n</pre>\n\n<br>\n<ul>\n<li>$EDC: The $EDC prefix is used to mark all those topics that are used as \"Control Topics\" for the remote management. The prefix will distinguish control topics from data topics used in\nunsolicited reports and it marks the associated messages as transient, not stored in the historical data archive if one is present.\n<li>account_name: an unique identifier that represents a group of devices and users and maps to the name of the current Everyware Cloud account.\n<li>client_id: an unique identifier within an account that represents a single gateway device. This client_id maps to the Client Identifier (Client ID) as defined in the MQTT specifications.\nFor a gateway, the MAC address of its primary network interface is generally used as the \"client_id\" of that gateway.\n<li>app_id: an identifier to denote an application running on the gateway device. We suggest to version the application identifier in order to allow multiple versions of the application to\ncoexist, e.g. CONF-V1, CONF-V2, etc.\n<li>verb: An optional token identifying the action to be performed on the resource. Suggested values are: GET to read the resource, PUT to create or update the resource, DEL to delete the\nresource, EXEC to perform additional operations.\n<li>resource-id: An optional token identifying one or more resources owned by the application. Examples of resources are sensors, actuators, local files, or configuration options. Applications\nmanage resources by being able to list them, read the latest value or update them to a new value. Each resource is identified by a resource_id, which can be a hierarchical topic. For example,\n\"sensors/temp\" or \"sensors/hum\" can act respectively as resource IDs for a temperature sensor and a humidity sensor.\n</ul>\nTo ensure the delivery of request messages, it is expected that each application that supports request/response\nconversations via MQTT subscribe to the following topic on device startup:\n\n<pre>\n$EDC/account_name/client_id/app_id/#\n</pre>\n\n.\nEveryware Cloud clients like Everyware Software Framework (ESF) and Eclipse Kura do offer this behavior by default.\nThe sendRequest method will proceed to the initiation of a request/response conversation by:\n<ol>\n<li>Generate a conversation identifier - \"request.id\" - for example by concatenating a random number to a timestamp\n<li>Subscribe to the topic where the response message will be published to, where requester.client.id is the Client ID of the requester:\n\n<pre>\n$EDC / account_name / requester.client.id / app_id / REPLY / request.id\n</pre>\n\n<li>Send the request message to the appropriate application-specific topic including the following fields in the payload:\n<ul>\n<li>request.id: identifier used to match a response with a request.\n<li>requester.client.id: the client ID of the issuer of the request.\n</ul>\n</ol>\nThe application receiving the request will process it and respond on a REPLY topic structured as:\n\n<pre>\n$EDC / account_name / requester.client.id / app_id / REPLY / request.id\n</pre>\n\n.\nOnce the response for a given request is received, the requester should unsubscribe from the REPLY topic.\nThe returned response will be an EdcPayload structure with three additional well-known metrics:\n<ul>\n<li>response.code: an error code for the remote operation. Valid codes are: 200, OK; 400, Bad Request; 404, Not Found; 500 Internal Error.\n<li>response.exception.message: Exception message, if any.\n<li>response.exception.stack: Remote exception stack trace, if any.\n</ul>\n<p>\nIn the following example we will request the current configuration to an ESF device connected under the current account:\n\n<pre>\ncurl --user 'username:password' -H \"Accept: application/xml\" -H \"Content-Type: application/xml\" -X GET 'https://api-sandbox.everyware-cloud.com/v2/devices/sendRequest.xml?topic=$EDC/edcguest/B8:E8:56:2A:BA:24/CONF-V1/GET/configurations'\n</pre>\n\nIn this specified case, the remote application will package the configurations of the services running in the target device in the body of the returned EdcResponsePayload. As all EdcMessage\nbodies, the returned XML service configurations will be serialized as an base64-encoded inline String in the body element."
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "timeout",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "description": "Sends a request message to a device and waits for a response synchronously.\nThis call is generally used to perform remote management of resources attached to the device such sensors and registries.\nThe target device is identified by the topic specified under the provided requestMessage. The topic is structured like the following:<br>\n\n<pre>\n$EDC / account_name / client_id / app_id / verb / resource - id\n</pre>\n\n<br>\n<ul>\n<li>$EDC: The $EDC prefix is used to mark all those topics that are used as \"Control Topics\" for the remote management. The prefix will distinguish control topics from data topics used in\nunsolicited reports and it marks the associated messages as transient, not stored in the historical data archive if one is present.\n<li>account_name: an unique identifier that represents a group of devices and users and maps to the name of the current Everyware Cloud account.\n<li>client_id: an unique identifier within an account that represents a single gateway device. This client_id maps to the Client Identifier (Client ID) as defined in the MQTT specifications.\nFor a gateway, the MAC address of its primary network interface is generally used as the \"client_id\" of that gateway.\n<li>app_id: an identifier to denote an application running on the gateway device. We suggest to version the application identifier in order to allow multiple versions of the application to\ncoexist, e.g. CONF-V1, CONF-V2, etc.\n<li>verb: An optional token identifying the action to be performed on the resource. Suggested values are: GET to read the resource, PUT to create or update the resource, DEL to delete the\nresource, EXEC to perform additional operations.\n<li>resource-id: An optional token identifying one or more resources owned by the application. Examples of resources are sensors, actuators, local files, or configuration options. Applications\nmanage resources by being able to list them, read the latest value or update them to a new value. Each resource is identified by a resource_id, which can be a hierarchical topic. For example,\n\"sensors/temp\" or \"sensors/hum\" can act respectively as resource IDs for a temperature sensor and a humidity sensor.\n</ul>\nTo ensure the delivery of request messages, it is expected that each application that supports request/response\nconversations via MQTT subscribe to the following topic on device startup:\n\n<pre>\n$EDC/account_name/client_id/app_id/#\n</pre>\n\n.\nEveryware Cloud clients like Everyware Software Framework (ESF) and Eclipse Kura do offer this behavior by default.\nThe sendRequest method will proceed to the initiation of a request/response conversation by:\n<ol>\n<li>Generate a conversation identifier - \"request.id\" - for example by concatenating a random number to a timestamp\n<li>Subscribe to the topic where the response message will be published to, where requester.client.id is the Client ID of the requester:\n\n<pre>\n$EDC / account_name / requester.client.id / app_id / REPLY / request.id\n</pre>\n\n<li>Send the request message to the appropriate application-specific topic including the following fields in the payload:\n<ul>\n<li>request.id: identifier used to match a response with a request.\n<li>requester.client.id: the client ID of the issuer of the request.\n</ul>\n</ol>\nThe application receiving the request will process it and respond on a REPLY topic structured as:\n\n<pre>\n$EDC / account_name / requester.client.id / app_id / REPLY / request.id\n</pre>\n\n.\nOnce the response for a given request is received, the requester should unsubscribe from the REPLY topic.\nThe returned response will be an EdcPayload structure with three additional well-known metrics:\n<ul>\n<li>response.code: an error code for the remote operation. Valid codes are: 200, OK; 400, Bad Request; 404, Not Found; 500 Internal Error.\n<li>response.exception.message: Exception message, if any.\n<li>response.exception.stack: Remote exception stack trace, if any.\n</ul>\n<p>\nIn the following example we will request the current configuration to an ESF device connected under the current account in JSON format:\n\n<pre>\ncurl --data '{\"topic\":\"$EDC/edcguest/B8:E8:56:2A:BA:24/CONF-V1/GET/configurations\",\"payload\":{}}' --user 'edcguest:Welcome1' -H \"Accept: application/json\" -H \"Content-Type: application/json\" -X POST 'http://localhost:8080/edc-rest-apis/v2/devices/sendRequest.json'\n</pre>\n\nIn this specified case, the remote application will package the configurations of the services running in the target device in the body of the returned EdcResponsePayload. As all EdcMessage\nbodies, the returned XML service configurations will be serialized as an base64-encoded inline String in the body element."
+      },
+      "parameters": []
+    },
+    "/v2/devices/{clientId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the Device identified by the specified ClientID under the account of the currently connected user.\n\n<p>\nExample of query in CURL :<br>\ncurl --user 'username:password' -k https://api-sandbox.everyware-cloud.com/v2/devices/{clientId}.xml | xmllint --format -"
+      },
+      "put": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Updates the Device specified by the \"clientId\" path parameter\nbased on the information provided in the Device request body."
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Deletes the Device specified by the \"clientId\" path parameter."
+      },
+      "parameters": [
+        {
+          "name": "clientId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The client ID of the device requested."
+        }
+      ]
+    },
+    "/v2/healthMonitors/period": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "startDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Start date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT. The default value of 0\nmeans no start date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "endDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "End date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT. The default value of 0 means\nno end date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          }
+        ],
+        "description": "Gets an aggregate health check report for the given period."
+      },
+      "parameters": []
+    },
+    "/v2/healthMonitors/{healthCheckReportId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Finds Health Check Report by the given path parameter."
+      },
+      "parameters": [
+        {
+          "name": "healthCheckReportId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ]
+    },
+    "/v2/messages/count": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the count of all the Messages published under the account of the currently connected user."
+      },
+      "parameters": []
+    },
+    "/v2/messages/publish": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "qos",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The quality of service to be used when publishing the provided message to the account broker"
+          },
+          {
+            "name": "retain",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The value of the retain flag to be used when publishing the provided message to the account broker"
+          }
+        ],
+        "description": "Publishes a new Message under the account of the currently connected user. The message will be published to the broker associated to this account. As such, devices and applications subscribed\nto the topic specified in the provided EdcMessage will receive a copy of the published message. Finally, all messages published to data topics - as opposed to control topics - will be stored in\nthe back-end for later queries."
+      },
+      "parameters": []
+    },
+    "/v2/messages/purge": {
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Delete all messages published on the account and reset account to the initial state without assets and topics.\n<p>\nExample of query in CURL :<br>\ncurl --user 'clientId:client password' -X DELETE -k https://api-sandbox.everyware-cloud.com/v2/messages/purge.xml"
+      },
+      "parameters": []
+    },
+    "/v2/messages/searchByAsset": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "asset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with the asset for which messages are requested."
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          },
+          {
+            "name": "startDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Start date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT.\nIf not specified it means no start date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "endDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "End date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT.\nIf not specified it means current time. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "fetch",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Specifies the amount of information requested. Allowed values are: meta, metrics, all. \"meta\" returns only the topic and received on information; \"metrics\" returns \"meta\" plus all\nthe metrics included in the message; \"all\" returns the whole message including its binary payload."
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "specify the timestamp sort order for messages : \"asc\" return messages in ascending order (oldest first), \"desc\" or not set, messages are returned newest first"
+          }
+        ],
+        "description": "Returns the list of all the Messages published by the given Asset. Please keep in mind that when supplying an Asset as a query parameter in a URL, proper URL encoding is necessary for\ncharacters like '+' (replace it with '%2B') and '#' (replace it with '%23'). The startDate and endDate query parameters determine the time range for the messages returned; the timestamp of the\nreturned messages will be in the interval between startDate and endDate.\n<p>\nIf the flag MessagesResult.limitExceeded is set, the maximum number of entries to be returned has been reached, more data exist and can be read by moving the offset forward in a new request\n<p>\nIf the parameter \"sort\" is set to \"asc\", messages are returned oldest first."
+      },
+      "parameters": []
+    },
+    "/v2/messages/searchByMetric": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "topic",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with the topic for which messages are requested."
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          },
+          {
+            "name": "startDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Start date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT.\nIf not specified it means no start date. Alternatively, the date can be expressed as a string following the ISO 8601 format. Mandatory for metrics data index by timestamp."
+          },
+          {
+            "name": "endDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "End date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT.\nIf not specified it means current time. Alternatively, the date can be expressed as a string following the ISO 8601 format. Mandatory for metrics data index by timestamp."
+          },
+          {
+            "name": "metric",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with the name of the metric used for the data filtering."
+          },
+          {
+            "name": "type",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with the type of the metric used for the data filtering. Allowed types are: string, double, int, float, long, boolean."
+          },
+          {
+            "name": "min",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Minimal value of the range of the metric to be applied. Mandatory for metrics data index by value."
+          },
+          {
+            "name": "max",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximal value of the range of the metric to be applied. Mandatory for metrics data index by value."
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "specify the timestamp or value sort order for messages : \"asc\" return messages in ascending order (oldest or smallest first), \"desc\" or not set, messages are returned newest or\ngreatest first"
+          }
+        ],
+        "description": "Returns the list of all the Messages published under the given Topic with the specific range of values for one of its metrics. Depending on your metric data indexing, the metrics may be stored\nin MetricsByValue or MetricsByTimestamp. In the first case, the range on values are mandatory, while the date range is optional and viceversa in the latter case. If the index metrics data is\nset to \"none\", the query is not available. Wild cards on the topic name can be used to aggregate messages at the different topic levels. For example, a topic \"edcguest/+/bus/#\" can used to\nreturn all messages published under the edcguest account, across all the assets, and for all the buses. Please keep in mind that when supplying a Topic as a query parameter in a URL, proper URL\nencoding is necessary for characters like '+' (replace it with '%2B') and '#' (replace it with '%23'). The startDate and endDate query parameters determine the time range for the messages\nreturned; the timestamp of the returned messages will be in the interval between startDate and endDate.\n<p>\nIf the flag MessagesResult.limitExceeded is set, the maximum number of entries to be returned has been reached, more data exist and can be read by moving the offset forward in a new request\n<p>\nThe messages returned are sorted. If the parameter \"sortType\" is set to \"time\", messages will be sorted by timestamp, if set to \"value\" or not set, messages will be sorted by metric value.<br>\nIf the parameter \"sort\" is set to \"asc\", messages are returned oldest or smallest first."
+      },
+      "parameters": []
+    },
+    "/v2/messages/searchByTopic": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "topic",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with the topic for which messages are requested."
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          },
+          {
+            "name": "startDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Start date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT.\nIf not specified it means no start date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "endDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "End date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT.\nIf not specified it means current time. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "fetch",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Specifies the amount of information requested. Allowed values are: meta, metrics, all. \"meta\" returns only the topic and received on information; \"metrics\" returns \"meta\" plus all\nthe metrics included in the message; \"all\" returns the whole message including its binary payload."
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "specify the timestamp sort order for messages : \"asc\" return messages in ascending order (oldest first), \"desc\" or not set, messages are returned newest first"
+          }
+        ],
+        "description": "Returns the list of all the Messages published under the given topic. Wild cards on the topic name can be used to aggregate messages at the different topic levels. For example, a topic\n\"edcguest/+/bus/#\" can used to return all messages published under the edcguest account, across all the assets, and for all the buses. Please keep in mind that when supplying a Topic as a query\nparameter in a URL, proper URL encoding is necessary for characters like '+' (replace it with '%2B') and '#' (replace it with '%23'). It is also required that the 'full topic' be supplied. This\nconsists of the 'topic prefix' and the 'semantic topic'. The 'topic prefix' is account/asset and the semantic topic is everything after. So, at minimum the topic supplied in this query must be\nat least three levels deep. The startDate and endDate query parameters determine the time range for the messages returned; the timestamp of the returned messages will be in the interval between\nstartDate and endDate.\n<p>\nIf the flag MessagesResult.limitExceeded is set, the maximum number of entries to be returned has been reached, more data exist and can be read by moving the offset forward in a new request\n<p>\nIf the parameter \"sort\" is set to \"asc\", messages are returned oldest first."
+      },
+      "parameters": []
+    },
+    "/v2/messages/store": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Stores a new Message under the account of the currently connected user. In this case, the provided message will only be stored in the back-end database and it will not be forwarded to the\nmessage broker."
+      },
+      "parameters": []
+    },
+    "/v2/messages/{MsgID}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "fetch",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Specifies the amount of information requested. Allowed values are: meta, metrics, all. \"meta\" returns only the topic and received on information; \"metrics\" returns \"meta\" plus all\nthe metrics included in the message; \"all\" returns the whole message including its binary payload."
+          }
+        ],
+        "description": "Returns the Message with a given uuid. Multiple comma separated uuids can be used for this query."
+      },
+      "parameters": [
+        {
+          "name": "MsgID",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "the uuid of the Message"
+        }
+      ]
+    },
+    "/v2/metrics/searchByTopic": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "topic",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with the topic for which metrics are requested."
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          }
+        ],
+        "description": "Returns the list of all metrics that where published under the specified Topic. For each returned Metric, its name, type and last value will be returned. Please keep in mind that when supplying\na Topic as a query parameter in a URL, proper URL encoding is necessary for characters like '+' (replace it with '%2B') and '#' (replace it with '%23')."
+      },
+      "parameters": []
+    },
+    "/v2/metrics/values": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "topic",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with the topic for which metrics are requested."
+          },
+          {
+            "name": "metric",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "description": "Returns the last message published to the specified topic but only the values for the metrics specified will be contained in the response to keep it compact and efficient. While the response is\nmodeled as a MessageResult, the result will always contain one single EdcMessage - the last one published to the specified topic. The returned EdcMessage will provide the timestamp and position\nof the message; the metrics contained will be limited to the one specified; no binary message body will be available. Please keep in mind that when supplying a Topic as a query parameter in a\nURL, proper URL encoding is necessary for characters like '+' (replace it with '%2B') and '#' (replace it with '%23')."
+      },
+      "parameters": []
+    },
+    "/v2/metrics/valuesByRange": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "topic",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with the topic for which messages are requested."
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          },
+          {
+            "name": "metric",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with the name of the metric used for the data filtering."
+          },
+          {
+            "name": "type",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with the type of the metric used for the data filtering. Allowed types are: string, double, int, float, long, boolean."
+          },
+          {
+            "name": "min",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with minimal value of the range of the metric to be applied."
+          },
+          {
+            "name": "max",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with maximal value of the range of the metric to be applied."
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "specify the sort order for metrics : \"asc\" return messages in ascending order (oldest first), \"desc\" or not set, messages are returned newest first"
+          }
+        ],
+        "description": "Returns the list of metrics published under the given Topic with the specific range of values. This API is available only if the metrics data are indexed by value. If the index metrics data is\nset to \"none\", the query is not available. The topic, metric name, metric type and min and max values are mandatory fields for this API, while the limit, offset and sorting fields are optional.\nWild cards on the topic name can be used to aggregate messages at the different topic levels. For example, a topic \"edcguest/+/bus/#\" can used to return all messages published under the\nedcguest account, across all the assets, and for all the buses. Please keep in mind that when supplying a Topic as a query parameter in a URL, proper URL encoding is necessary for characters\nlike '+' (replace it with '%2B') and '#' (replace it with '%23').\n<p>\nIf the flag limitExceeded is set, the maximum number of entries to be returned has been reached, more data exist and can be read by moving the offset forward in a new request\n<p>\nIf the parameter \"sort\" is set to \"asc\", metrics are returned smaller first."
+      },
+      "parameters": []
+    },
+    "/v2/metrics/valuesByTimestamp": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "topic",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with the topic for which messages are requested."
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          },
+          {
+            "name": "metric",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with the name of the metric used for the data filtering."
+          },
+          {
+            "name": "type",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with the type of the metric used for the data filtering. Allowed types are: string, double, int, float, long, boolean. *"
+          },
+          {
+            "name": "startDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with the start date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT.\nIf not specified it means no start date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "endDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with the end date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT.\nIf not specified it means current time. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "specify the sort order for metrics : \"asc\" return messages in ascending order (smallest first), \"desc\" or not set, messages are returned greatest first"
+          }
+        ],
+        "description": "Returns the list of metrics published under the given Topic with the specific range of timestamp. This API is available only if the metrics data are indexed by timestamp. If the index metrics\ndata is set to \"none\", the query is not available. The topic, metric name, metric type and start and end date are mandatory fields for this API, while the limit, offset and sorting fields are\noptional. Wild cards on the topic name can be used to aggregate messages at the different topic levels. For example, a topic \"edcguest/+/bus/#\" can used to return all messages published under\nthe edcguest account, across all the assets, and for all the buses. Please keep in mind that when supplying a Topic as a query parameter in a URL, proper URL encoding is necessary for\ncharacters like '+' (replace it with '%2B') and '#' (replace it with '%23').\n<p>\nIf the flag limitExceeded is set, the maximum number of entries to be returned has been reached, more data exist and can be read by moving the offset forward in a new request\n<p>\nIf the parameter \"sort\" is set to \"asc\", metrics are returned oldest first."
+      },
+      "parameters": []
+    },
+    "/v2/provisionRequests/count": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Return the number of provision request used by this account. Remember that the account resources may be\nshared with sub-accounts of this account."
+      },
+      "parameters": []
+    },
+    "/v2/provisionRequests/{provisionRequestId}": {
+      "put": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Updates the ProvisionRequest specified by the \"provisionRequestId\" path parameter\nbased on the information provided in the ProvisionRequest parameter. <br/>\nOnly certain fields are editable after a provision request has been created. <br/>\nThe editable fields are:\n<ul>\n<li>activatesOn</li>\n<li>expiresOn</li>\n<li>status</li>\n<li>provisionJob.retryMaxAttempts</li>\n</ul>"
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the ProvisionRequest and its associated ProvisionJob, specified by the provisionRequestId path parameter."
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Deletes the ProvisionRequest specified by the \"provisionRequestId\" path parameter. <br/>\nWhen deleting a provisionRequest the associated provisionJob and all related attachment will also be deleted."
+      },
+      "parameters": [
+        {
+          "name": "provisionRequestId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The id of the ProvisionRequest to be updated."
+        }
+      ]
+    },
+    "/v2/roles/administrator": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the Administrator Role for the current account."
+      },
+      "parameters": []
+    },
+    "/v2/roles/{roleId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the Role specified by the \"id\" path parameter."
+      },
+      "put": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Updates the Role specified by the \"id\" path parameter\nbased on the information provided in the Role parameter."
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Deletes the Role specified by the \"id\" path parameter."
+      },
+      "parameters": [
+        {
+          "name": "roleId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The id of the Role requested."
+        }
+      ]
+    },
+    "/v2/rules/actions": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the list of all the Rule Actions available."
+      },
+      "parameters": []
+    },
+    "/v2/rules/{ruleId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the Rule specified by the \"id\" path parameter."
+      },
+      "put": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Updates the Rule specified by the \"id\" path parameter\nbased on the information provided in the Rule parameter."
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Deletes the Rule specified by the \"id\" path parameter."
+      },
+      "parameters": [
+        {
+          "name": "ruleId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The id of the Rule requested."
+        }
+      ]
+    },
+    "/v2/streams/subscribe": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "topic",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The topics list to subscribe to. The MQTT syntax for specifying topic wild card is accepted - e.g. edcguest/+/#."
+          },
+          {
+            "name": "timeout",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "the timeout of the request in milliseconds. Defaults to 60000ms (= 60s = 1min). Max allowed value is: 300000 (= 300s = 5min)"
+          },
+          {
+            "name": "fetch",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Specifies the amount of information requested. Allowed values are: meta, metrics, all. \"meta\" returns only the topic and received on information; \"metrics\" returns \"meta\" plus all\nthe metrics included in the message; \"all\" returns the whole message including its binary payload."
+          }
+        ],
+        "description": "Push REST API to subscribe to a given topic and receive messages published under that topic.\nWhen the client connects to this URL, the response is suspended,\nand a <a href=\"https://en.wikipedia.org/wiki/Push_technology#Long_Polling\">\nComet Long Polling</a> session is initiated.\n\nBy default a server-side timeout of 1 minute is applied to the suspended response.\nThe client code is expected to handle the closing of the connection from the server side and\nperform a reconnect if necessary. A maximum time out of 5 minutes can be specified.\nUpon receiving a message on the subscribed topic, the message will be formatted in\nXML or JSON format as requested and sent as response body to the suspended request.\n\nFollowing the Long Polling protocol, the request will then be closed; it is left up\nto the client to reopen a new request. JSON will be the default format if no extension is provided. <br/>\n\nCross Origin Request Support (CORS) is included so Java Scripts clients executed in\nweb browser can initiate subscribe REST calls from any domain. <br/>\nPlease refer to our code samples for client libraries that you can use to make Comet requests."
+      },
+      "parameters": []
+    },
+    "/v2/tags/apply": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Creates a new TagApplication on the information provided in TagApplicationCreator parameter."
+      },
+      "parameters": []
+    },
+    "/v2/tags/findByName": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The name of the Tag requested."
+          }
+        ],
+        "description": "Returns the Tag specified by the \"name\" query parameter."
+      },
+      "parameters": []
+    },
+    "/v2/tags/findTagApplicationByTaggable": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "entityType",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The type of the entity for which search."
+          },
+          {
+            "name": "entityId",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The id of the entity for which search."
+          }
+        ],
+        "description": "Gets the list of all the tag application associated to the given taggable entity."
+      },
+      "parameters": []
+    },
+    "/v2/tags/getTagSummary": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Return a summary of total device assigned per Tag"
+      },
+      "parameters": []
+    },
+    "/v2/tags/remove": {
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "tagId",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The tagId of the TagApplication to be deleted."
+          },
+          {
+            "name": "entityType",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The entityType of the TagApplication to be deleted."
+          },
+          {
+            "name": "entityId",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The entityId of the TagApplication to be deleted."
+          }
+        ],
+        "description": "Deletes the TagApplication specified by the tagId, entityType and entityId path parameters."
+      },
+      "parameters": []
+    },
+    "/v2/tags/{tagId}": {
+      "put": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Updates the Tag specified by the \"id\" path parameter based on the information provided in the Tag parameter."
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the Tag specified by the \"id\" path parameter."
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Deletes the Tag specified by the \"id\" path parameter."
+      },
+      "parameters": [
+        {
+          "name": "tagId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The id of the Tag to be updated."
+        }
+      ]
+    },
+    "/v2/topics/count": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "topic",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "description": "Returns the count of all the Messages published under the specified topic."
+      },
+      "parameters": []
+    },
+    "/v2/users/findByName": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "username",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The username of the User requested."
+          }
+        ],
+        "description": "Returns the User specified by the \"username\" query parameter."
+      },
+      "parameters": []
+    },
+    "/v2/users/{userId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the User specified by the \"id\" path parameter."
+      },
+      "put": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Updates the User specified by the \"id\" path parameter\nbased on the information provided in the User parameter."
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Deletes the User specified by the \"id\" path parameter."
+      },
+      "parameters": [
+        {
+          "name": "userId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The id of the User requested."
+        }
+      ]
+    },
+    "/v2/vpn/connections": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the list of all the VpnConnection currently active under this account."
+      },
+      "parameters": []
+    },
+    "/v2/accounts/{accountId}/childAccounts": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "recoursive",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "description": "Returns the list of all direct child accounts for the Account specified by the \"id\" path parameter."
+      },
+      "parameters": [
+        {
+          "name": "accountId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The id of the Account requested."
+        }
+      ]
+    },
+    "/v2/accounts/{accountId}/servicePlan": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the Service Plan for the Account specified by the \"id\" path parameter."
+      },
+      "parameters": [
+        {
+          "name": "accountId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The id of the Account for which the Service Plan is requested."
+        }
+      ]
+    },
+    "/v2/accounts/{accountId}/usageByDay": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          },
+          {
+            "name": "startDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Start date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT. The default value of 0\nmeans no start date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "endDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "End date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT. The default value of 0 means\nno end date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          }
+        ],
+        "description": "Returns the daily usage for the Account specified by the \"id\" path parameter."
+      },
+      "parameters": [
+        {
+          "name": "accountId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The id of the Account for which the usage is requested."
+        }
+      ]
+    },
+    "/v2/accounts/{accountId}/usageByHour": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          },
+          {
+            "name": "startDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Start date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT. The default value of 0\nmeans no start date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "endDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "End date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT. The default value of 0 means\nno end date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          }
+        ],
+        "description": "Returns the usage for the Account specified by the \"id\" path parameter."
+      },
+      "parameters": [
+        {
+          "name": "accountId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The id of the Account for which the usage is requested."
+        }
+      ]
+    },
+    "/v2/assets/{asset}/count": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the count of all the Messages that the specified asset published."
+      },
+      "parameters": [
+        {
+          "name": "asset",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ]
+    },
+    "/v2/assets/{asset}/topics": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          },
+          {
+            "name": "prefix",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "description": "Returns the list of all the Topic that the specified asset published under.\nFor each returned Topic, the topic and timestamp of its last received message will be returned."
+      },
+      "parameters": [
+        {
+          "name": "asset",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ]
+    },
+    "/v2/deviceCerts/{certificateId}/block": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the blocked device certificate identified by the specified certificateId.\n\n<p>\nExample of query in CURL :<br>\ncurl --user 'username:password' -k https://api-sandbox.everyware-cloud.com/v2/deviceCerts/{certificateId}.xml | xmllint --format -"
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Deletes the blocked device certificate specified by the \"certificateId\" path parameter."
+      },
+      "parameters": [
+        {
+          "name": "certificateId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ]
+    },
+    "/v2/deviceCerts/{certificateId}/install": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Try to install the device certificate specified by the \"certificateId\" path parameter into the message broker truststore."
+      },
+      "parameters": [
+        {
+          "name": "certificateId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The id of the device certificate to be installed."
+        }
+      ]
+    },
+    "/v2/deviceCerts/{certificateId}/revoke": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Revoke the device certificate specified by the \"certificateId\" path parameter."
+      },
+      "parameters": [
+        {
+          "name": "certificateId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The id of the device certificate to be revoked."
+        }
+      ]
+    },
+    "/v2/deviceJobs/{deviceJobId}/executions": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "fetchLogs",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "description": "Return the list of the executions for the specified Device Job supporting pagination.\n\nThe device job executions contains the log of the execution."
+      },
+      "parameters": [
+        {
+          "name": "deviceJobId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ]
+    },
+    "/v2/deviceJobs/{deviceJobId}/targets": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "deviceStatuses",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "description": "Return the list of the target of the specified device job supporting pagination.\n\nIt also supports filtering by DeviceJobTargetStatus. If not specified all DevicesJobTargetStatus are selected."
+      },
+      "parameters": [
+        {
+          "name": "deviceJobId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ]
+    },
+    "/v2/devices/{clientId}/command": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Executes a remote command on a device and return the command output.\n\n<p>\nExample to list all files in the current working directory:\n\n<pre>\nClient client = client();\nWebResource apisWeb = client.resource(APIS_TEST_URL);\nWebResource.Builder deviceCommandWebXml = apisWeb.path(&quot;devices&quot;)\n.path(s_clientId)\n.path(&quot;command&quot;)\n.accept(MediaType.APPLICATION_XML)\n.type(MediaType.APPLICATION_XML);\n\nDeviceCommandInput commandInput = new DeviceCommandInput();\ncommandInput.setCommand(&quot;ls&quot;);\ncommandInput.setArguments(new String[] { &quot;-l&quot;, &quot;-a&quot; });\n\nDeviceCommandOutput commandOutput = deviceCommandWebXml.post(DeviceCommandOutput.class, commandInput);\n</pre>\n\n<p>\nExample of query in CURL. The command input XML request body is read from file:<br>\n\ncurl --user 'username:password' -X POST -H 'Content-type: application/xml' -d @command.xml -k https://api-sandbox.everyware-cloud.com/v2/devices/{clientId}/command.xml | xmllint --format -"
+      },
+      "parameters": [
+        {
+          "name": "clientId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The client ID of the Device requested."
+        }
+      ]
+    },
+    "/v2/devices/{clientId}/configurations": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "componentId",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "The PID (service's persistent identity) of the OSGi component requested."
+          }
+        ],
+        "description": "Returns the configuration of a device or the configuration of the OSGi component\nidentified with specified PID (service's persistent identity).\nIn the OSGi framework, the service's persistent identity is defined as the name attribute of the\nComponent Descriptor XML file; at runtime, the same value is also available\nin the component.name and in the service.pid attributes of the Component Configuration.\n\n<p>\nExample of query in CURL:<br>\ncurl --user 'username:password' -k https://api-sandbox.everyware-cloud.com/v2/devices/{clientId}/configurations.xml?componentId={componentId} | xmllint --format -"
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [],
+        "description": "Updates the configuration of the registered OSGi component with the specified pid.\n\n\n\n<p>\nExample of query in CURL. This example reads the configuration from file:<br>\ncurl --user 'username:password' -X POST -H 'Content-type: application/xml' -d @configuration.xml -k https://api-sandbox.everyware-cloud.com/v2/devices/{clientId}/configurations"
+      },
+      "parameters": [
+        {
+          "name": "clientId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The client ID of the device requested."
+        }
+      ]
+    },
+    "/v2/devices/{clientId}/events": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Maximum number of entries to be returned."
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Starting offset for the entries to be returned."
+          },
+          {
+            "name": "startDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Start date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT. The default value of 0\nmeans no start date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "endDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "End date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT. The default value of 0 means\nno end date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          }
+        ],
+        "description": "Returns the events for the device identified by the specified ClientID under the account of the currently connected user.\n<p>\nIf the flag DeviceEventsResult.limitExceeded is set, the maximum number of entries to be returned has been reached, more events exist and can be read by moving the offset forward in a new\nrequest\n\n<p>\nExample of query in CURL:<br>\ncurl --user 'username:password' -k https://api-sandbox.everyware-cloud.com/v2/devices/{clientId}/events.xml | xmllint --format -"
+      },
+      "parameters": [
+        {
+          "name": "clientId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The client ID of the device requested."
+        }
+      ]
+    },
+    "/v2/devices/{clientId}/packages": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the list of packages deployed on a device.\n\n<p>\nExample of query in CURL:<br>\ncurl --user 'username:password' -k https://api-sandbox.everyware-cloud.com/v2/devices/{clientId}/packages.xml | xmllint --format -"
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "packageUrl",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Mandatory parameter with the URL of the package to install."
+          }
+        ],
+        "description": "Install a new deployment package on a device.\n\n<p>\nExample of query in CURL: curl --user 'username:password' -X POST https://api-sandbox.everyware-cloud.com/v2/devices/{clientId}/packages?packageUrl={packageUrl}"
+      },
+      "parameters": [
+        {
+          "name": "clientId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The client ID of the Device requested."
+        }
+      ]
+    },
+    "/v2/devices/{clientId}/rollback": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "snapshotId",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "description": "Updates the configuration of a device rolling back a given snapshot ID.\n\n<p>\nExample of query in CURL:<br>\ncurl --user 'username:password' -X POST https://api-sandbox.everyware-cloud.com/v2/devices/{clientId}/rollback?snapshotId={snapshotId}"
+      },
+      "parameters": [
+        {
+          "name": "clientId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The client ID of the Device requested."
+        }
+      ]
+    },
+    "/v2/devices/{clientId}/snapshots": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the list of snapshot (older configurations) IDs of the device.\n\n<p>\nExample of query in CURL:<br>\ncurl --user 'username:password' -k https://api-sandbox.everyware-cloud.com/v2/devices/{clientId}/snapshots.xml | xmllint --format -"
+      },
+      "parameters": [
+        {
+          "name": "clientId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The client ID of the Device requested."
+        }
+      ]
+    },
+    "/v2/devices/{clientId}/wakeupSMS": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Sends a wakeup SMS to ay device identified by the value of the \"clientId\" parameter. More in detail the call allows to request to the SIM provider M2M platform to send a wakeup sms to a device.\nA positive reply from the SIM provider M2M platform doesn't confirm the delivery of the SMS to the device, but only that the M2M platform takes in charge of send the wakeup SMS to the device.\n\n\nExample of query in CURL.<br>\n\ncurl --user 'username:password' -X POST -k https://api-sandbox.everyware-cloud.com/v2/devices/{clientId}/wakeupSMS"
+      },
+      "parameters": [
+        {
+          "name": "clientId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The client ID of the Device addressee of the wakeup SMS."
+        }
+      ]
+    },
+    "/v2/healthMonitors/{healthCheckReportId}/healthCheckLogs": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "fetchLogs",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Sets whether or not retrieve also text log for a Health Check Report, default to false."
+          },
+          {
+            "name": "startDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Start date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT. The default value of 0\nmeans no start date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          },
+          {
+            "name": "endDate",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "End date of the date range requested. The parameter is expressed as a long counting the number of milliseconds since January 1, 1970, 00:00:00 GMT. The default value of 0 means\nno end date. Alternatively, the date can be expressed as a string following the ISO 8601 format."
+          }
+        ],
+        "description": "Gets all health check logs related to a health check report."
+      },
+      "parameters": [
+        {
+          "name": "healthCheckReportId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "the health check report for which ask logs"
+        }
+      ]
+    },
+    "/v2/provisionRequests/{provisionRequestId}/executions": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Return the list of the executions for the specified Provision Request"
+      },
+      "parameters": [
+        {
+          "name": "provisionRequestId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ]
+    },
+    "/v2/users/{userId}/unlock": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Unlock a User based on the userId provided in the path request."
+      },
+      "parameters": [
+        {
+          "name": "userId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The userId that refer to the user to unlock."
+        }
+      ]
+    },
+    "/v2/vpn/connect/{clientId}": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Sends a VPN connect request to the device identified by the specified clientId.\nTo be able to process the request, the device must be connected to the Everyware Cloud\nand have the Everyware Software Framework with the VPN Remote Access bundle installed\nand configured. Upon receiving the request, the device will start a VPN connection\nto the specified VPN server. The call returns the status of the VPN Connection of\nsuch device at the end of the operation."
+      },
+      "parameters": [
+        {
+          "name": "clientId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The client ID of the device whose VPN connect is requested."
+        }
+      ]
+    },
+    "/v2/vpn/connections/{vpnConnectionId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the details of the VpnConnection specified by the \"vpnConnectionId\" path parameter."
+      },
+      "parameters": [
+        {
+          "name": "vpnConnectionId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The Id of the VpnConnection requested."
+        }
+      ]
+    },
+    "/v2/vpn/disconnect/{clientId}": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Sends a VPN disconnect request to the device identified by the specified clientId.\nTo be able to process the request, the device must be connected to the Everyware Cloud\nand have the Everyware Software Framework with the VPN Remote Access bundle installed\nand configured. Upon receiving the request, the device will stop the current VPN\nconnection if one is active. The call returns the status of the VPN Connection of\nsuch device at the end of the operation."
+      },
+      "parameters": [
+        {
+          "name": "clientId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The client ID of the device whose VPN disconnect is requested."
+        }
+      ]
+    },
+    "/v2/vpn/status/{clientId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the VPN connection status for the device identified by the specified clientId.\nTo be able to process the request, the device must be connected to the Everyware Cloud\nand have the Everyware Software Framework with the VPN Remote Access bundle installed\nand configured. The call returns the status of the VPN Connection of such device at the\nend of the operation."
+      },
+      "parameters": [
+        {
+          "name": "clientId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The client ID of the device whose VPN connection status is requested."
+        }
+      ]
+    },
+    "/v2/accounts/{accountId}/devices/count": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns the number of currently connected devices for the specified account."
+      },
+      "parameters": [
+        {
+          "name": "accountId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The id of the Account."
+        }
+      ]
+    },
+    "/v2/deviceJobs/{deviceJobId}/targets/{targetClientId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Get the information for the specified Target Client ID in the specified Device Job"
+      },
+      "parameters": [
+        {
+          "name": "deviceJobId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "targetClientId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ]
+    },
+    "/v2/devices/{clientId}/packages/{packageName}": {
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Uninstalls a package deployed on a device.\n\n<p>\nExample of query in CURL:<br>\ncurl --user 'username:password' -X DELETE -k https://api-sandbox.everyware-cloud.com/v2/devices/F0:DE:F1:C4:53:DB/packages/{packageName}"
+      },
+      "parameters": [
+        {
+          "name": "clientId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The client ID of the Device requested."
+        },
+        {
+          "name": "packageName",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ]
+    },
+    "/v2/devices/{clientId}/snapshots/{snapshotId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Returns an older configuration of a device from a given snapshot ID.\n\n<p>\nExample of query in CURL:<br>\ncurl --user 'username:password' -k https://api-sandbox.everyware-cloud.com/v2/devices/{clientId}/snapshots/{snapshotId}.xml | xmllint --format -"
+      },
+      "parameters": [
+        {
+          "name": "clientId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "The client ID of the Device requested."
+        },
+        {
+          "name": "snapshotId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ]
+    },
+    "/v2/healthMonitors/{healthCheckReportId}/healthCheckLogs/{healthCheckLogId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Gets a specific HealthCheckLog by the given parameters"
+      },
+      "parameters": [
+        {
+          "name": "healthCheckReportId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "the HealthCheckReport ID."
+        },
+        {
+          "name": "healthCheckLogId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "the HealthCheckLog ID."
+        }
+      ]
+    },
+    "/v2/deviceJobs/{deviceJobId}/executions/{deviceJobExecutionId}/sendStopSignal": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Send a stop signal to the device job execution.\nThe stop signal will be captured only at next target, so is not possible to stop the device job during the current item processed.\n\n<br/><br/>\nBe careful that stopping a device job can be harmful for the target devices"
+      },
+      "parameters": [
+        {
+          "name": "deviceJobId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "description": "the device job id to stop"
+        },
+        {
+          "name": "deviceJobExecutionId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ]
+    },
+    "/v2/provisionRequests/{provisionRequestId}/executions/{ProvisionJobExecutionId}/sendStopSignal": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        },
+        "description": "Send a stop signal to the provisioning execution.\nThe stop signal will be captured only at next step, so is not possible to stop the device job during the current step processing.\n\n<br/>\n<br/>\nBe careful that stopping a provision request can be harmful for the target device."
+      },
+      "parameters": [
+        {
+          "name": "provisionRequestId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "ProvisionJobExecutionId",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ]
+    }
+  }
+}
